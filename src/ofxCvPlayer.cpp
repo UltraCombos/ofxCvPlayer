@@ -215,11 +215,19 @@ public:
 		if (bVideoOpened && bNewPixels) {
 			std::lock_guard<std::mutex> guard(frameMutex);
 			pixels.setFromExternalPixels(frames[frontIndex].data, frames[frontIndex].cols, frames[frontIndex].rows, OF_PIXELS_RGB);
-			//pixels.setFromPixels(frames[frontIndex].data, frames[frontIndex].cols, frames[frontIndex].rows, OF_PIXELS_RGB);
 			bNewPixels = false;
 		}
 		return pixels;
 	}
+
+	void loadTexture(ofTexture* tex) {
+		if (bVideoOpened && bNewPixels) {
+			std::lock_guard<std::mutex> guard(frameMutex);
+			tex->loadData(frames[frontIndex].data, frames[frontIndex].cols, frames[frontIndex].rows, GL_RGB);
+			bNewPixels = false;
+		}
+	}
+
 protected:
 	void threadedFunction()
 	{
@@ -465,7 +473,7 @@ void ofxCvPlayer::setLoopState(ofLoopType state) {
 			player->setLoop(true);
 		}
 		else {
-			ofLogError("ofDirectShowPlayer") << " cannot set loop of type palindrome " << endl;
+			ofLogError("ofxCvPlayer") << " cannot set loop of type palindrome " << endl;
 		}
 	}
 }
@@ -520,5 +528,12 @@ void ofxCvPlayer::nextFrame() {
 void ofxCvPlayer::previousFrame() {
 	if (player && player->isLoaded()) {
 		player->preFrame();
+	}
+}
+
+void ofxCvPlayer::loadTexture(ofTexture* tex)
+{
+	if (player && player->isLoaded()) {
+		player->loadTexture(tex);
 	}
 }

@@ -56,6 +56,8 @@ public:
 	void                nextFrame();
 	void                previousFrame();
 
+	void                loadTexture(ofTexture* tex);
+
 private:
 	std::shared_ptr<CvPlayer> player;
 	ofPixelFormat pixelFormat = OF_PIXELS_RGB;

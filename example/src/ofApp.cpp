@@ -21,7 +21,7 @@ void ofApp::setup(){
 	
 
 	{
-		const string filename = "videos/gw2.mp4";
+		const string filename = "videos/hap_2048.avi";
 		players.resize(MAX_PLAYERS);
 		textures.resize(MAX_PLAYERS);
 		for (auto& p : players)
@@ -44,14 +44,13 @@ void ofApp::update(){
 		auto& p = players[i];
 		if (!p.isFrameNew()) continue;
 
-		auto& pix = p.getPixels();
-		textures[i].loadData(pix);
+		//auto& pix = p.getPixels();
+		//textures[i].loadData(pix);
+		p.loadTexture(&textures[i]);
 	}
 	float dt = ofGetElapsedTimef() - ts;
 	if (dt > 1.0 / 60.0)
-	{
 		printf("update %f\n", dt);
-	}
 	
 }
 
@@ -103,12 +102,8 @@ void ofApp::draw(){
 
 	if (bDebugVisible)
 	{
-		ofPushMatrix();
 		for (auto& gui : mGui)
-		{
 			gui->draw();
-		}
-		ofPopMatrix();
 	}
 		
 }

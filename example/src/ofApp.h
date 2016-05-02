@@ -38,7 +38,7 @@ private:
 		WIDTH = 1280,
 		HEIGHT = 720,
 		FBO_SIZE = 1920,
-		MAX_PLAYERS = 9
+		MAX_PLAYERS = 4
 	};
 	
 	bool bDebugVisible = true;
